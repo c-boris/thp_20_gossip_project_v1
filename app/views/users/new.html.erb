@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <center>
+    <br>
+      <h1><p class = "text-secondary">Créer un compte</h1></p>
+      <br>
+      <div class="card text-white bg-primary mb-3" style="width: 32rem;">
+        <div class="card-body">
+          <%= form_tag('/users', method: 'post') do %>
+            <br>
+            <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+            <%= label_tag "Prénom :" %><br>
+            <%= text_field_tag :first_name, nil %><br><br>
+            <%= label_tag "Nom : " %><br>
+            <%= text_field_tag :last_name, nil %><br><br>
+            <%= label_tag "Age : " %><br>
+            <%= text_field_tag :age, nil %><br><br>
+            <%= label_tag "Mot de passe : " %><br>
+            <%= text_field_tag :password, nil %><br><br>
+            <%= label_tag "Confirmation du mot de passe : " %><br>
+            <%= text_field_tag :password_confirmation, nil %><br><br>
+            <%= label_tag "Email : " %><br>
+            <%= text_field_tag :email, nil %><br><br>
+            <%= label_tag "Description : " %><br>
+            <%= text_area_tag :description, nil, size: '60' %>
+            <br><br>
+            <%= submit_tag "S'inscrire", data: { turbo: false } %>
+            <br>
+            <p></p>
+          <% end %>
+        </div>
+      </div>
+    </center>
+  </body>
+</html>

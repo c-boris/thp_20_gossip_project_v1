@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <center>
+    <br>
+      <h1><p class = "text-secondary">Créer un nouveau potin</h1></p>
+      <br>
+      <div class="card text-white bg-primary mb-3" style="width: 32rem;">
+        <div class="card-body">
+          <%= form_tag('/gossips', method: 'post') do %>
+            <br>
+            <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+            <%= label_tag :title, "Nom du potin:" %><br>
+            <%= text_field_tag :title, nil %><br><br>
+            <%= label_tag :content, "Le contenu de votre potin:" %><br>
+            <%= text_area_tag :content, nil, size: '60' %>
+            <br><br>
+            <%= submit_tag "Envoyer", data: { turbo: false } %>
+            <br>
+            <p></p>
+          <% end %>
+        </div>
+      </div>
+      <br><br>
+      <% if @gossip.errors.any? %>
+        <div class="alert alert-danger custom_alert" role="alert">
+          <p>Nous n'avons pas réussi à créer le potin pour la (ou les) raison(s) suivante(s) :</p>
+            <ul class="bullet">
+              <li>Le titre doit avoir au minimum 3 caractères et maximum 14 caractères.</li>
+              <li>Le content ne doit pas être vide.</li>
+            </ul>
+        </div>
+      <% end %>
+    </center>
+  </body>
+</html>

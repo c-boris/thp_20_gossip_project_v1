@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <center>
+    <br>
+      <h1><p class = "text-secondary">The Gossip Project</p></h1>
+      <p>
+      <p><h4><p class = "text-secondary">Bienvenue sur la page des potins</p></h4>
+      <br>
+      <p><h6><p class = "text-secondary">La liste des potins :</p></h6>
+      <br>
+
+      <!-- POST-IT START -->
+      <div class="container bootstrap snippets bootdeys">
+        <div class="row">
+          <% @titles.reverse_each.with_index do |gossip, index| %>
+          <% inc = index % 5 %>
+            <div class="col-4 content-card">
+              <div class="card-big-shadow">
+                <div class="card card-just-text" data-background="color" data-color="<%= @colors[inc] %>" data-radius="none">
+                  <div class="content">
+                    <h6 class="category">par <%= gossip.user.first_name %></h6>
+                      <h4 class="title"><a href="/gossips/<%= gossip.id %>"><%= gossip.title %></a></h4>
+                        <p class="description"><%= gossip.content %></p>
+                          <i class="fas fa-thumbs-up">
+                            <%counter_like = 0%>
+                            <%Like.all.each do |like|%>
+                              <% if (like.gossip_id == gossip.id) then counter_like+=1 end%>
+                            <% end %>
+                            <%=counter_like%>
+                          </i>
+                        <%if current_user%>
+                        <%if already_exists?(gossip)%>
+                          <br><br><%=button_to "J'aime pas", likesgossip_path(id: gossip.id), :class=>"btn btn-primary", method: :delete %>
+                            <%else%>
+                          <br><br><%=button_to "J'aime", likesgossip_index_path(gossip_id: gossip.id), :class=>"btn btn-primary", method: :post %>
+                        <%end%>
+                    <%end%>
+                  </div>
+                </div> <!-- end card -->
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      <!-- POST-IT END -->
+    </center>
+  </body>
+</html>

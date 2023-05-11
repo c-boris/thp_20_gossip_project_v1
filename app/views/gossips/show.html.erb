@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <center>      
+      <h1><p class = "text-secondary"><%= @gossip.title %></h1></p>
+      <p>par <%= link_to "#{@user.first_name}", user_path(@user.id), :class=>"my_link" %></a> le <%= @gossip.created_at.strftime("%d/%m/%Y %H:%M") %></p>
+      <p>Depuis la ville de <%= link_to "#{City.find(@user.city_id).name}", city_path(@user.city_id), :class=>"my_link" %></a></p> 
+      <br>
+      <p><%= @gossip.content %></p>
+      <%if current_user && current_user.id == @user.id%>
+        <br><%= button_to "Modifier ce potin", edit_gossip_path(@gossip.id), :class=>"btn btn-warning", method: :get %>
+        <%= button_to "Détruire ce potin", gossip_path(@gossip.id), :class=>"btn btn-danger", form: { data:{turbo_confirm: "Êtes-vous CERTAIN(E) ?"}}, method: :delete %>
+      <%end%>
+      <br><br>
+      <br><h4><p class = "text-secondary">Espace commentaires</p></h4>
+
+      <br>
+        Il y a <%=@gossip.comments.count %> commentaires.
+      <br>
+      
+      <% Comment.all.each do |c| %>
+        <% if c.gossip_id == @gossip.id%>
+          <br><%=User.find_by(id: c.user_id).first_name %> : <%= c.content%> - 
+          <%if current_user && current_user.id == c.user_id %>
+            <%=button_to "Editer", edit_gossip_comment_url(@gossip, c.id), :class=>"btn btn-warning", method: :get %>
+            <%=button_to "Supprimer", gossip_comment_path(@gossip, c.id), :class=>"btn btn-danger", form: { data:{turbo_confirm: "Êtes-vous CERTAIN(E) ?"}}, method: :delete %>
+          <%end%>
+          <br>
+        <% end %>
+      <% end %>
+
+      <i class="fas fa-thumbs-up">
+        <%counter_like = 0%>
+          <%Like.all.each do |like|%>
+            <% if (like.gossip_id == @gossip.id) then counter_like+=1 end%>
+          <% end %>
+        <%=counter_like%>
+      </i>
+
+      <%if current_user%>
+      <%if already_exists?(@gossip)%>
+        <br><br><%=button_to "J'aime pas", likesgossip_path(id: @gossip.id), :class=>"btn btn-success", method: :delete %>
+          <%else%>
+        <br><br><%=button_to "J'aime", likesgossip_index_path(gossip_id: @gossip.id), :class=>"btn btn-success", method: :post %>
+      <%end%>
+        <br><br><h1><p class = "text-secondary">Rédiger un commentaire</h1></p><br>
+        <%= form_tag(gossip_comments_path(@gossip), method: :post) do%>
+          <%= label_tag "Rédiger un commentaire" %>
+            <br><br>
+              <%= text_area_tag :content, nil, placeholder: "Votre commentaire...", rows: 5, cols: 50 %>
+            <br><br>
+          <%= submit_tag "Publier ce commentaire.", data: {turbo:false} %>
+        <% end %>
+      <%end%>
+    </center>
+  </body>
+</html>

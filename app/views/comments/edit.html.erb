@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <center>
+    <br>
+      <h1><p class = "text-secondary">Modifier le commentaire</h1></p>
+      <br>
+          <%= form_for @comment, url: gossip_comment_url, method: :patch do |f| %>
+          <br>
+
+            <br>
+            <div class = "form-group">
+              <label>Votre commentaire :</label>
+              <%= f.text_area :content, class: 'form-control', :value => @comment.content %>
+            </div>
+
+            <br>
+            <div class = "form-group">
+              <button type = "submit">Valider la modification</button>
+            </div>
+
+          <p></p>
+        <% end %>
+      <%= link_to "Revenir à la page d'accueil", root_path, :class=>"navbar-brand my_link" %>
+      <br><br><br>
+    </center>
+  </body>
+</html>

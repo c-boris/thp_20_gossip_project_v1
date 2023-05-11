@@ -1,0 +1,22 @@
+.card-big-shadow {
+  max-width: 320px;
+  position: relative;
+}
+
+.card {
+  border-radius: 8px;
+  box-shadow: 0 2px 2px rgba(204, 197, 185, 0.5);
+  background-color: #FFFFFF;
+  color: #252422;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.card.card-just-text .content {
+  padding: 50px 65px;
+  text-align: center;
+}
+.card .content {
+  padding: 20px 20px 10px 20px;
+}
