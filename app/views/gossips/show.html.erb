@@ -7,8 +7,9 @@
       <br>
       <p><%= @gossip.content %></p>
       <%if current_user && current_user.id == @user.id%>
-        <br><%= button_to "Modifier ce potin", edit_gossip_path(@gossip.id), :class=>"btn btn-warning", method: :get %>
-        <%= button_to "Détruire ce potin", gossip_path(@gossip.id), :class=>"btn btn-danger", form: { data:{turbo_confirm: "Êtes-vous CERTAIN(E) ?"}}, method: :delete %>
+        <br><%= button_to "Modifier ce potin", edit_gossip_path(@gossip.id), :class=>"btn btn-primary", method: :get %>
+        <br>
+        <%= button_to "Détruire ce potin", gossip_path(@gossip.id), :class=>"btn btn-primary", form: { data:{turbo_confirm: "Êtes-vous CERTAIN(E) ?"}}, method: :delete %>
       <%end%>
       <br><br>
       <br><h4><p class = "text-secondary">Espace commentaires</p></h4>
@@ -38,15 +39,15 @@
 
       <%if current_user%>
       <%if already_exists?(@gossip)%>
-        <br><br><%=button_to "J'aime pas", likesgossip_path(id: @gossip.id), :class=>"btn btn-success", method: :delete %>
+        <br><br><%=button_to "J'aime pas", likesgossip_path(id: @gossip.id), :class=>"btn btn-primary", method: :delete %>
           <%else%>
-        <br><br><%=button_to "J'aime", likesgossip_index_path(gossip_id: @gossip.id), :class=>"btn btn-success", method: :post %>
+        <br><br><%=button_to "J'aime", likesgossip_index_path(gossip_id: @gossip.id), :class=>"btn btn-primary", method: :post %>
       <%end%>
         <br><br><h1><p class = "text-secondary">Rédiger un commentaire</h1></p><br>
         <%= form_tag(gossip_comments_path(@gossip), method: :post) do%>
           <%= label_tag "Rédiger un commentaire" %>
             <br><br>
-              <%= text_area_tag :content, nil, placeholder: "Votre commentaire...", rows: 5, cols: 50 %>
+              <%= text_area_tag :content, nil, placeholder: "Votre commentaire..", rows: 5, cols: 50 %>
             <br><br>
           <%= submit_tag "Publier ce commentaire.", data: {turbo:false} %>
         <% end %>
